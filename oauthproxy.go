@@ -1019,6 +1019,11 @@ func (p *OAuthProxy) addHeadersForProxying(rw http.ResponseWriter, req *http.Req
 		} else {
 			req.Header.Del("X-Forwarded-Preferred-Username")
 		}
+		if session.FullName != "" {
+			req.Header["X-Forwarded-FullName"] = []string{session.FullName}
+		} else {
+			req.Header.Del("X-Forwarded-FullName")
+		}
 	}
 
 	if p.SetXAuthRequest {
@@ -1032,6 +1037,11 @@ func (p *OAuthProxy) addHeadersForProxying(rw http.ResponseWriter, req *http.Req
 			rw.Header().Set("X-Auth-Request-Preferred-Username", session.PreferredUsername)
 		} else {
 			rw.Header().Del("X-Auth-Request-Preferred-Username")
+		}
+		if session.FullName != "" {
+			rw.Header().Set("X-Auth-Request-FullName", session.FullName)
+		} else {
+			rw.Header().Del("X-Auth-Request-FullName")
 		}
 
 		if p.PassAccessToken {

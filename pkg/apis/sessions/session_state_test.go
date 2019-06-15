@@ -31,6 +31,7 @@ func TestSessionStateSerialization(t *testing.T) {
 	s := &SessionState{
 		Email:             "user@domain.com",
 		PreferredUsername: "user",
+		FullName:          "User 1",
 		AccessToken:       "token1234",
 		IDToken:           "rawtoken1234",
 		CreatedAt:         timePtr(time.Now()),
@@ -46,6 +47,7 @@ func TestSessionStateSerialization(t *testing.T) {
 	assert.Equal(t, "", ss.User)
 	assert.Equal(t, s.Email, ss.Email)
 	assert.Equal(t, s.PreferredUsername, ss.PreferredUsername)
+	assert.Equal(t, s.FullName, ss.FullName)
 	assert.Equal(t, s.AccessToken, ss.AccessToken)
 	assert.Equal(t, s.IDToken, ss.IDToken)
 	assert.Equal(t, s.CreatedAt.Unix(), ss.CreatedAt.Unix())

@@ -137,12 +137,14 @@ func (p *OlympiaProvider) createSessionState(ctx context.Context, token *oauth2.
 		ExpiresOn:    &token.Expiry,
 		Email:        profile.Email,
 		User:         profile.Username,
+		FullName:     profile.Name,
 	}, nil
 }
 
 type olympiaUserInfo struct {
 	Username string `json:"username"`
 	Email    string `json:"email"`
+	Name     string `json:"name"`
 }
 
 func (p *OlympiaProvider) GetUserInfo(ctx context.Context, accessToken string) (*olympiaUserInfo, error) {

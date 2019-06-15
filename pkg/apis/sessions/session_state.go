@@ -20,6 +20,7 @@ type SessionState struct {
 	Email             string     `json:",omitempty"`
 	User              string     `json:",omitempty"`
 	PreferredUsername string     `json:",omitempty"`
+	FullName          string     `json:",omitempty"`
 }
 
 // IsExpired checks whether the session has expired
@@ -67,12 +68,14 @@ func (s *SessionState) EncodeSessionState(c encryption.Cipher) (string, error) {
 		ss.Email = s.Email
 		ss.User = s.User
 		ss.PreferredUsername = s.PreferredUsername
+		ss.FullName = s.FullName
 	} else {
 		ss = *s
 		for _, s := range []*string{
 			&ss.Email,
 			&ss.User,
 			&ss.PreferredUsername,
+			&ss.FullName,
 			&ss.AccessToken,
 			&ss.IDToken,
 			&ss.RefreshToken,
@@ -102,6 +105,7 @@ func DecodeSessionState(v string, c encryption.Cipher) (*SessionState, error) {
 			Email:             ss.Email,
 			User:              ss.User,
 			PreferredUsername: ss.PreferredUsername,
+			FullName:          ss.FullName,
 		}
 	} else {
 		// Backward compatibility with using unencrypted Email or User
@@ -121,6 +125,7 @@ func DecodeSessionState(v string, c encryption.Cipher) (*SessionState, error) {
 
 		for _, s := range []*string{
 			&ss.PreferredUsername,
+			&ss.FullName,
 			&ss.AccessToken,
 			&ss.IDToken,
 			&ss.RefreshToken,
